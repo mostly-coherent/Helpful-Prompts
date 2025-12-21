@@ -1,6 +1,6 @@
-# Debug — Comprehensive Project Audit & Auto-Fix
+# Debug — Comprehensive Project Audit
 
-> **Prompt for Cursor AI to thoroughly audit a project for bugs, optimizations, and accessibility issues**
+> **Automated debugging audit for bugs, performance, and accessibility issues**
 
 ---
 
@@ -11,7 +11,7 @@ Perform a comprehensive debug audit of this project.
 
 ## Scope
 
-Analyze the ENTIRE codebase to identify:
+Analyze the codebase to identify:
 
 ### 1. Bugs & Issues (Critical Priority)
 - Runtime errors and unhandled exceptions
@@ -33,7 +33,7 @@ Analyze the ENTIRE codebase to identify:
 - Missing lazy loading for heavy components
 
 ### 3. Accessibility Issues (High Priority)
-- Poor color contrast (text vs background) — WCAG AA minimum 4.5:1
+- Poor color contrast (WCAG AA minimum 4.5:1 for text, 3:1 for UI)
 - Missing alt text on images
 - Missing ARIA labels on interactive elements
 - Keyboard navigation gaps
@@ -48,12 +48,12 @@ For each issue found, provide:
 
 | Field | Description |
 |-------|-------------|
-| **File** | Path to the affected file |
+| **File** | Path to affected file |
 | **Line(s)** | Line number(s) |
 | **Category** | Bug / Optimization / Accessibility |
 | **Severity** | Critical / High / Medium / Low |
 | **Issue** | Clear description of the problem |
-| **Confidence** | High / Medium / Low (your confidence in the fix) |
+| **Confidence** | High / Medium / Low (confidence in the fix) |
 | **Fix** | Proposed solution |
 
 ## Action Rules
@@ -96,27 +96,25 @@ Do NOT auto-fix when:
 
 ### Full Project Audit
 ```
-@debug.md — Run full audit on this project
+Run full debug audit on this project
 ```
 
 ### Targeted Audit
 ```
-@debug.md — Focus on accessibility issues only
+Focus on accessibility issues only
 ```
 
 ```
-@debug.md — Focus on performance optimizations only
+Focus on performance optimizations only
 ```
 
 ```
-@debug.md — Audit only the /src/components folder
+Audit only the /src/components folder
 ```
 
 ---
 
-## Category Deep-Dives
-
-### Accessibility Checklist (WCAG 2.1 AA)
+## Accessibility Checklist (WCAG 2.1 AA)
 
 | Check | Requirement |
 |-------|-------------|
@@ -129,7 +127,9 @@ Do NOT auto-fix when:
 | **Heading Hierarchy** | Logical h1→h2→h3 structure |
 | **Link Purpose** | Link text describes destination (no "click here") |
 
-### Common Bug Patterns
+---
+
+## Common Bug Patterns
 
 | Pattern | Example |
 |---------|---------|
@@ -140,7 +140,9 @@ Do NOT auto-fix when:
 | **Key Prop Missing** | Lists without unique `key` |
 | **Event Handler Binding** | Arrow function in render causing re-renders |
 
-### Performance Red Flags
+---
+
+## Performance Red Flags
 
 | Issue | Detection |
 |-------|-----------|
@@ -211,13 +213,4 @@ Do NOT auto-fix when:
 
 ---
 
-## Integration with Other Prompts
-
-- After `@debug.md`, run tests to verify fixes
-- Pair with `@Critique_Agent.md` for code quality review
-- Use `@OptimizeDoc.md` for documentation gaps found
-
----
-
-**Last Updated:** 2025-12-13
-
+**Last Updated:** 2025-12-21

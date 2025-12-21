@@ -1,159 +1,146 @@
-# 📝 Helpful Prompts
+# Helpful Prompts
 
-**The actual system prompts and workflows I use to code agentically.** I decided to build in public to show exactly how I partner with AI to move fast.
+A collection of reusable, generic prompts for AI-assisted development and documentation.
+
+---
+
+## 📁 Prompt Categories
+
+### 🐛 Development & Debugging
+- **`Debug.md`** — Comprehensive project audit for bugs, performance, and accessibility issues
+- **`Format.md`** — Style normalization for markdown documents (heading hierarchy, spacing, tables)
+- **`OptimizeDoc.md`** — Lossless distillation to maximize readability and clarity
+- **`ReviseDoc.md`** — Light-touch refinement with minimal edits
+
+### 📝 Requirements & Planning
+- **`Critique_Agent.md`** — Critique existing product requirements documents with structured feedback
+- **`Requirement_Agent.md`** — Create or update product requirements documents (Builder Briefs and PRDs)
+- **`Builder_Template.md`** — Template for lightweight, prototype-driven product briefs
+- **`PRD_Template.md`** — Template for comprehensive product requirement documents
+- **`BusinessGuide.md`** — Convert technical documentation into business-friendly guides
+
+### 📄 Documentation
+- **`README-project-template.md`** — Generic project README template
+- **`README-project-refine-prompt.md`** — Refine existing README for best practices
+- **`ListQuestions.md`** — Extract all open questions from a document
+- **`ListConflicts.md`** — Extract all conflicting facts from a document
+
+### 🔒 Security & Privacy
+- **`Workspace_Privacy_Optimization.md`** — Prepare workspace for GitHub sharing while protecting private content
+- **`GitSync.md`** — Sync local changes to GitHub with safety checks
 
 ---
 
 ## 🚀 Quick Start
 
-In Cursor Chat, reference any prompt with `@`:
+### Using a Prompt
+1. Open the prompt file you need
+2. Copy the entire prompt or the specific section you need
+3. Paste into your AI assistant (Cursor, ChatGPT, Claude, etc.)
+4. Replace any `{{PLACEHOLDERS}}` with your specific values
+5. Run the prompt
 
+### Example
 ```
-@Generate-server-scripts.md @your-project-folder
+@Debug.md — Run full debug audit on this project
 ```
 
-Or open the `.md` file and copy the prompt directly.
+---
+
+## 📋 Prompt Usage Patterns
+
+### For Project Setup
+1. Use `README-project-template.md` as starting point
+2. After scaffolding, use `README-project-refine-prompt.md` to polish
+
+### For Requirements
+1. Use `Requirement_Agent.md` to create new PRD or Builder Brief
+2. Use `Critique_Agent.md` to review completed requirements
+3. Use `Builder_Template.md` or `PRD_Template.md` as structure reference
+
+### For Documentation Cleanup
+1. Use `OptimizeDoc.md` for content restructuring
+2. Use `ReviseDoc.md` for light touch-ups
+3. Use `Format.md` for final formatting polish
+
+### For Code Quality
+1. Use `Debug.md` for comprehensive audit
+2. Fix high-confidence issues automatically
+3. Review medium/low-confidence issues manually
 
 ---
 
-## 📂 What's Inside
+## 🔧 Customization
 
-### Server_Scripts/
-**Auto-generate `start-servers.sh`, `stop-servers.sh`, and `check-servers.sh` for any project.**
+All prompts in this collection are generic and workspace-agnostic. To customize for your specific needs:
 
-**The problem it solves:** You clone someone's project or switch between multiple local projects. You waste 15 minutes figuring out what ports they use, which terminal has what running, whether you need to start Postgres first or the backend will crash. Or you return to a project after weeks away and have no idea what the startup sequence is.
+1. **Replace placeholders:**
+   - `<WORKSPACE_PATH>` → Your workspace path
+   - `<WORK_USER>` → Your work GitHub username
+   - `<PERSONAL_USER>` → Your personal GitHub username
+   - `{{PLATFORM_NAME}}` → Your platform/product name
+   - `{{CLIENT_TEAMS}}` → Your target audience
 
-**When to use it:**
-- You're working on 3+ projects and context-switching constantly
-- You cloned a project without clear setup docs
-- You have multi-service architecture (frontend + backend + database)
-- You forgot what you had running and ports are conflicting
+2. **Adjust patterns:**
+   - Private folder patterns (`Private*/`, `_private/`, `.local/`)
+   - .gitignore patterns
+   - Git workflow steps
 
-**When NOT to use it:**
-- Single-service Next.js app where `npm run dev` is enough
-- You already have docker-compose (use that instead)
-- The project has mature scripts already (don't replace working systems)
-
-**Real impact:** Turns "What ports does this use? Is the backend already running? Why won't this start?" into `./start-servers.sh` and you're coding in 30 seconds.
-
-See [Server_Scripts/README.md](Server_Scripts/README.md) for full documentation.
-
-### GitSync.md
-**Push local changes to GitHub with PR workflow.**
-
-**The problem it solves:** You're working solo but want to maintain PR hygiene (for portfolio, for practice, or because you'll have teammates later). The manual workflow is: create branch, stage, commit, push, open GitHub, create PR, click merge, delete branch, switch back to main, pull, delete local branch. For 6 files changed. Every time. You start skipping PRs and pushing to main because it's tedious.
-
-**When to use it:**
-- Solo projects where you want PR discipline without the busywork
-- Syncing multiple project folders in your workspace at once
-- You're building in public and want clean git history
-
-**When NOT to use it:**
-- Complex branch strategies with multiple long-lived branches
-- Team projects where PR descriptions need context and review is real
-- You need to carefully craft commit messages (this generates generic ones)
-
-**Real impact:** Maintains the habit of PR-based development without the friction that makes you abandon it.
-
-### Debug.md
-**Systematic debugging prompt for when things break.**
-
-**The problem it solves:** You're stuck. The bug makes no sense. You've been staring at the same 20 lines for an hour, making random changes hoping something works. You're in the "debugging by intuition and prayer" phase. You need to slow down and be methodical but your brain won't cooperate.
-
-**When to use it:**
-- You've been debugging for >30 minutes with no progress
-- The issue is intermittent and you can't nail down reproduction steps
-- You're working in an unfamiliar codebase or stack
-- You need accessibility/performance audit across the whole project
-
-**When NOT to use it:**
-- Simple typos or obvious syntax errors (just fix them)
-- You already know the root cause and just need to implement the fix
-- First debugging attempt (try manual debugging first, build your intuition)
-
-**Real impact:** Forces systematic thinking when you're spiraling. The structured format breaks you out of "change random things" mode. Also catches accessibility issues you'd never spot manually (color contrast ratios, missing ARIA labels).
-
-### Privacy-Security.md
-**Prepare your workspace for public GitHub sharing.**
-
-**The problem it solves:** You built a project in private with your personal file paths, email addresses, API keys, and private notes scattered everywhere. Now you want to share it publicly or add it to your portfolio. You need to audit everything but manually searching is error-prone—you'll miss something and it'll be embarrassing or worse.
-
-**When to use it:**
-- One-time cleanup before open-sourcing a private project
-- Setting up privacy patterns for a new workspace
-- You're about to add collaborators and need to ensure no secrets are committed
-
-**When NOT to use it:**
-- Project was built to be public from day 1 (already following best practices)
-- You're working in a fully isolated environment with no personal info
-- It's a throwaway prototype you'll never share
-
-**Real impact:** Prevents the "oh no I committed my API key" post-mortem. One audit catches personal file paths, hardcoded credentials, and email addresses you forgot were in config files.
+3. **Extend prompts:**
+   - Add project-specific rules
+   - Add custom quality checks
+   - Add domain-specific patterns
 
 ---
 
-## 🧭 How to Choose
+## 📚 Best Practices
 
-**"I just cloned a project and don't know how to start it."**  
-→ `@Server_Scripts/Generate-server-scripts.md` + the project folder
+### When Using Prompts
+- ✅ Read the entire prompt before using
+- ✅ Understand what it will do (especially auto-fix prompts)
+- ✅ Replace ALL placeholders with actual values
+- ✅ Test on a small scope first (single file/folder)
+- ✅ Review AI output before accepting changes
 
-**"I have changes to push but the PR workflow is tedious."**  
-→ `@GitSync.md` (after customizing with your GitHub account)
+### When Modifying Prompts
+- ✅ Keep prompts focused on one task
+- ✅ Use clear section headers
+- ✅ Include examples where helpful
+- ✅ Document any assumptions
+- ✅ Version your changes
 
-**"Something's broken and I've been stuck for 30+ minutes."**  
-→ `@Debug.md` + describe what's broken
-
-**"I want to open-source this private project."**  
-→ `@Privacy-Security.md` to audit for personal info and secrets
-
-**"None of these match my problem."**  
-→ These prompts solve specific friction points. If you're not feeling the pain, you don't need them. Build your own prompt when you hit the same annoying issue 3+ times.
-
----
-
-## 🎯 Usage Pattern
-
-1. **Find the prompt** you need in this folder
-2. **Reference it** in Cursor Chat with `@filename.md`
-3. **Add context** by also referencing your project folder: `@your-project`
-4. **Customize** the generated output as needed
-
-Most prompts are designed to be self-contained—just reference and run.
+### Safety First
+- ⚠️ Review auto-fix changes before committing
+- ⚠️ Backup important files before running destructive operations
+- ⚠️ Verify remote URLs before pushing to GitHub
+- ⚠️ Never commit secrets or personal information
 
 ---
 
-## 📝 Adding New Prompts
+## 🤝 Contributing
 
-Keep prompts:
-- **Single-purpose** — One clear task per file
-- **Self-documenting** — Include usage examples in the prompt
-- **Copy/paste safe** — Clean command blocks, no inline comments
+These prompts are continually refined based on real-world usage. If you improve a prompt:
 
----
-
-## 💭 Why Build in Public?
-
-Most "prompt engineering" content is either too abstract ("here's a theory about AI prompting") or too specific to someone else's workflow ("here's my 47-step morning routine with AI"). These prompts evolved from actual friction points—cloning a project and wasting 20 minutes figuring out how to start it, wanting PR discipline but hating the busywork, debugging for an hour with no progress and needing to slow down.
-
-I'm sharing them exactly as I use them because the value is in the **specificity**. Not "here's how to think about prompts" but "copy this, attach your project, get scripts that actually work."
-
-## 🎯 Philosophy
-
-**Solve real friction, not hypothetical problems.** Every prompt here exists because I hit the same annoying issue 3+ times and decided to systematize the solution. If you're not feeling the pain it solves, you don't need it.
-
-**Trade-offs over silver bullets.** Server scripts add complexity. GitSync generates generic commit messages. Debug audits can be overwhelming. I use them anyway because the trade-off is worth it for my workflow. Might not be for yours—that's fine.
-
-**Steal and modify.** These work for solo development on 3-6 simultaneous projects with multi-service architecture. Your context is different. Adapt them. The format matters less than the underlying automation pattern.
-
-## 🔮 What's Next
-
-Adding prompts as real problems arise: structured code reviews when I'm reviewing my own code and missing obvious issues, PR descriptions when I want better commit history without manual effort, project scaffolding when I'm tired of copy-pasting the same Next.js + Supabase setup.
-
-The goal isn't a comprehensive library. It's a toolkit for **my** most frequent friction points, shared in case they're yours too.
-
-**Note:** I have more prompts I use at Adobe (synthesis workflows, repository mapping, architecture decision records), but they're workspace-specific and wouldn't make sense out of context. Happy to discuss the patterns behind them if you want to build something similar for your workflow.
+1. Test the improvement thoroughly
+2. Document what changed and why
+3. Update the version and date
+4. Share back to source if applicable
 
 ---
 
-**Status:** Active  
-**Repo:** `github.com/mostly-coherent/Helpful-Prompts`
+## 📖 Additional Resources
+
+### Related Folders
+- **`Server_Scripts/`** — Server-side scripting utilities
+
+### Documentation Standards
+- Keep prompts under 500 lines when possible
+- Use markdown tables for structured data
+- Include version/date headers
+- Provide examples for complex concepts
+
+---
+
+**Last Updated:** 2025-12-21  
+**Prompt Count:** 15  
+**Status:** ✅ Production Ready

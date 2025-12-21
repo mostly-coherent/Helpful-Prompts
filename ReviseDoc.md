@@ -1,0 +1,1 @@
+Perform lossless distillation to maximize readability and clarity. If needed, resequence for logical flow.
