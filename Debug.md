@@ -79,6 +79,7 @@ Do NOT auto-fix when:
 2. **Auto-Fixed** — List of changes already applied (with file paths)
 3. **Pending Review** — Issues requiring human decision
 4. **Recommendations** — Suggested improvements beyond scope
+5. **Unused Files Deleted** — List of unused files removed (excluding documentation)
 
 ## Execution Order
 
@@ -88,6 +89,7 @@ Do NOT auto-fix when:
 4. Review API routes and data fetching
 5. Check test coverage gaps (if tests exist)
 6. Generate report and apply high-confidence fixes
+7. **Identify and delete unused files** (exclude documentation - handled by cleanup-folder.md)
 ```
 
 ---
@@ -178,6 +180,70 @@ Audit only the /src/components folder
 
 ---
 
+## Unused Files Cleanup
+
+### Scope
+
+After fixing bugs and applying optimizations, identify and delete unused files **excluding documentation** (documentation cleanup is handled by `cleanup-folder.md`).
+
+### Files to Identify for Deletion
+
+| Category | Examples | Action |
+|----------|----------|--------|
+| **Unused Code Files** | Unused components, utilities, deprecated modules | Delete if not imported anywhere |
+| **Backup Files** | `*.backup`, `*.bak`, `*_backup.*`, `*.old` | Delete if content preserved in git history |
+| **Temporary Files** | `temp_*`, `tmp_*`, `*.tmp`, test output files | Delete |
+| **Build Artifacts** | `*.log`, `*.cache`, build output files (if not in .gitignore) | Delete |
+| **Duplicate Files** | Files with `_copy`, `_old`, `_v1`, `_v2` suffixes | Delete if superseded |
+| **Unused Config** | Unused config files, empty directories | Delete if not referenced |
+| **Legacy Code** | Deprecated modules marked for removal | Delete if migration complete |
+
+### Files to Exclude from Deletion
+
+| Category | Examples | Reason |
+|----------|----------|--------|
+| **Documentation** | All `.md` files | Handled by cleanup-folder.md agent |
+| **Git Files** | `.git/`, `.gitignore`, `.gitattributes` | Required for version control |
+| **Config Files** | `package.json`, `tsconfig.json`, `.env.example` | Required for project setup |
+| **Test Files** | `*.spec.ts`, `*.test.ts`, `e2e/` | Required for testing |
+| **Build Config** | `next.config.ts`, `tailwind.config.ts`, `playwright.config.ts` | Required for builds |
+| **Dependencies** | `node_modules/`, `package-lock.json` | Required for dependencies |
+
+### Verification Before Deletion
+
+Before deleting any file:
+
+1. **Check imports/references**: Search codebase for imports or references to the file
+2. **Check git history**: Verify file content is preserved in git if it's a backup
+3. **Check documentation**: Ensure file isn't referenced in docs or comments
+4. **Check build/test**: Verify deletion won't break builds or tests
+5. **High confidence only**: Only delete files with high confidence they're unused
+
+### Execution Steps
+
+1. **Scan for unused files**:
+   - Search for backup patterns (`*.backup`, `*_backup.*`, etc.)
+   - Search for temporary patterns (`temp_*`, `tmp_*`, `*.tmp`)
+   - Search for duplicate patterns (`*_copy.*`, `*_old.*`, `*_v1.*`)
+   - Check for unused imports/exports in codebase
+
+2. **Verify each file**:
+   - Search codebase for references
+   - Check git history for content preservation
+   - Verify not referenced in documentation
+
+3. **Delete with logging**:
+   - Log each deleted file with reason
+   - Include in "Unused Files Deleted" section of report
+   - Only delete files with high confidence
+
+4. **Report summary**:
+   - List all deleted files
+   - Include reason for each deletion
+   - Note any files that were reviewed but kept
+
+---
+
 ## Example Output
 
 ### Summary
@@ -211,6 +277,17 @@ Audit only the /src/components folder
    Reason for review: May require design approval
 ```
 
+### Unused Files Deleted
+
+```
+🗑️ src/components/OldButton.tsx — Unused component (replaced by Button.tsx)
+🗑️ src/lib/deprecated.ts — Unused utility file
+🗑️ data/config.json.backup — Backup file (content preserved in git history)
+🗑️ temp_test_output.json — Temporary test file
+```
+
+**Note:** Documentation files (`.md` files) are excluded from deletion as they are handled by the cleanup-folder.md agent.
+
 ---
 
-**Last Updated:** 2025-12-21
+**Last Updated:** 2025-12-29
