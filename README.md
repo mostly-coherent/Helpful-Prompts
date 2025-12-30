@@ -40,32 +40,35 @@ Cursor: [Runs full debug audit using agent instructions]
 <details>
 <summary>✨ Available Agents</summary>
 
-### 🐛 Development & Debugging
+### 🐛 Code & Development
 - **[Debug.md](Debug.md)** — Full project audit (bugs, performance, accessibility)
+- **[ReArchitecture.md](ReArchitecture.md)** — Architecture refactoring and redesign
+
+### 📄 Documentation
+- **[README-project-template.md](README-project-template.md)** — Generic project README template
+- **[README-project-refine-prompt.md](README-project-refine-prompt.md)** — Polish existing READMEs
 - **[Format.md](Format.md)** — Markdown style normalization
 - **[OptimizeDoc.md](OptimizeDoc.md)** — Lossless distillation for clarity
 - **[ReviseDoc.md](ReviseDoc.md)** — Light-touch refinement
 - **[Cleanup-folder.md](Cleanup-folder.md)** — Harmonize project docs to canonical structure
+- **[BusinessGuide.md](BusinessGuide.md)** — Technical → business-friendly translation
 
 ### 📝 Requirements & Planning
 - **[Requirement_Agent.md](Requirement_Agent.md)** — Create or update PRDs and Builder Briefs
 - **[Critique_Agent.md](Critique_Agent.md)** — Structured feedback on requirements
 - **[Builder_Template.md](Builder_Template.md)** — Lightweight prototype-driven briefs
 - **[PRD_Template.md](PRD_Template.md)** — Comprehensive requirements template
-- **[BusinessGuide.md](BusinessGuide.md)** — Technical → business-friendly translation
 
-### 📄 Documentation
-- **[README-project-template.md](README-project-template.md)** — Generic project README template
-- **[README-project-refine-prompt.md](README-project-refine-prompt.md)** — Polish existing READMEs
 - **[ListQuestions.md](ListQuestions.md)** — Extract open questions from docs
 - **[ListConflicts.md](ListConflicts.md)** — Extract conflicting facts
 
-### 🔒 Security & Privacy
-- **[Workspace_Privacy_Optimization.md](Workspace_Privacy_Optimization.md)** — Prep workspace for GitHub sharing
+### 🚀 DevOps & Infrastructure
+- **[Server_Scripts/Generate-server-scripts.md](Server_Scripts/Generate-server-scripts.md)** — Generate start/stop/check scripts for multi-service projects
 - **[GitSync.md](GitSync.md)** — Safe git sync workflow
 
-### 🛠️ Server Management
-- **[Server_Scripts/Generate-server-scripts.md](Server_Scripts/Generate-server-scripts.md)** — Generate start/stop/check scripts for multi-service projects
+### 🔒 Security & Privacy
+- **[Workspace_Privacy_Optimization.md](Workspace_Privacy_Optimization.md)** — Prep workspace for GitHub sharing
+- **[Privacy-Security.md](Privacy-Security.md)** — Privacy and security best practices
 
 </details>
 
@@ -204,5 +207,5 @@ Replace these with your actual values when using agents.
 ---
 
 **Last Updated:** 2025-01-30  
-**Agent Count:** 16  
+**Agent Count:** 19  
 **Other Projects:** [github.com/mostly-coherent](https://github.com/mostly-coherent)
