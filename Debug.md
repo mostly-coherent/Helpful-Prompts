@@ -9,6 +9,21 @@
 ```
 Perform a comprehensive debug audit of this project.
 
+## Path Scoping (CRITICAL)
+
+**Always scope file operations to the explicitly specified project directory.**
+
+When the user says "@Debug.md on Inspiration", audit ONLY files within:
+- `/Users/jmbeh/Personal Builder Lab/Inspiration/` (or relative equivalent)
+
+**Explicitly EXCLUDE:**
+- `MyPrivateTools/` and all subdirectories (private tools, symlinks)
+- `OtherBuilders/` (cloned reference projects)
+- `Docs_*/` folders (documentation only)
+- Any path outside the target project directory
+
+**Why:** Workspace may contain symlinks or duplicate directories (e.g., `MyPrivateTools/Inspiration/.next`) that create "ghost files" if not excluded. Always use absolute paths relative to the project root, not workspace root.
+
 ## Scope
 
 Analyze the codebase to identify:
@@ -83,13 +98,20 @@ Do NOT auto-fix when:
 
 ## Execution Order
 
-1. Read all source files (src/, app/, components/, lib/, pages/)
-2. Check configuration files (package.json, tsconfig, eslint, tailwind)
-3. Analyze styles for accessibility (CSS, Tailwind classes)
-4. Review API routes and data fetching
-5. Check test coverage gaps (if tests exist)
-6. Generate report and apply high-confidence fixes
-7. **Identify and delete unused files** (exclude documentation - handled by cleanup-folder.md)
+1. **Scope the audit to the target project directory only** — Use absolute paths and exclude:
+   - `MyPrivateTools/` and all subdirectories (symlinks/private tools)
+   - `OtherBuilders/` (cloned reference projects)
+   - `Docs_*` folders (documentation only)
+   - Any path outside the explicitly specified project directory
+2. Read all source files (src/, app/, components/, lib/, pages/) **within the target project only**
+3. Check configuration files (package.json, tsconfig, eslint, tailwind) **within the target project only**
+4. Analyze styles for accessibility (CSS, Tailwind classes) **within the target project only**
+5. Review API routes and data fetching **within the target project only**
+6. Check test coverage gaps (if tests exist) **within the target project only**
+7. Generate report and apply high-confidence fixes
+8. **Identify and delete unused files** (exclude documentation - handled by cleanup-folder.md) **within the target project only**
+
+**Critical:** When scanning directories, always use the project root as the base path and explicitly exclude workspace-level folders like `MyPrivateTools/`, `OtherBuilders/`, and `Docs_*/` to avoid "ghost files" from symlinks or duplicate directories.
 ```
 
 ---
