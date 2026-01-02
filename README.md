@@ -43,6 +43,8 @@ Cursor: [Runs full debug audit using agent instructions]
 ### 🐛 Code & Development
 - **[Debug.md](Debug.md)** — Full project audit (bugs, performance, accessibility)
 - **[ReArchitecture.md](ReArchitecture.md)** — Architecture refactoring and redesign
+- **[Layman-Explanation.md](Layman-Explanation.md)** — AI explains code changes in simple terms (7-part format)
+- **[Cleanup-folder.md](Cleanup-folder.md)** — Harmonize project docs to canonical structure
 
 ### 📄 Documentation
 - **[README-project-template.md](README-project-template.md)** — Generic project README template
@@ -50,8 +52,8 @@ Cursor: [Runs full debug audit using agent instructions]
 - **[Format.md](Format.md)** — Markdown style normalization
 - **[OptimizeDoc.md](OptimizeDoc.md)** — Lossless distillation for clarity
 - **[ReviseDoc.md](ReviseDoc.md)** — Light-touch refinement
-- **[Cleanup-folder.md](Cleanup-folder.md)** — Harmonize project docs to canonical structure
 - **[BusinessGuide.md](BusinessGuide.md)** — Technical → business-friendly translation
+
 
 ### 📝 Requirements & Planning
 - **[Requirement_Agent.md](Requirement_Agent.md)** — Create or update PRDs and Builder Briefs
@@ -206,6 +208,6 @@ Replace these with your actual values when using agents.
 
 ---
 
-**Last Updated:** 2025-01-30  
-**Agent Count:** 19  
+**Last Updated:** 2025-01-02  
+**Agent Count:** 20  
 **Other Projects:** [github.com/mostly-coherent](https://github.com/mostly-coherent)
