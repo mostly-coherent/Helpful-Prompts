@@ -14,7 +14,7 @@ Perform a comprehensive debug audit of this project.
 **Always scope file operations to the explicitly specified project directory.**
 
 When the user says "@Debug.md on Inspiration", audit ONLY files within:
-- `/Users/jmbeh/Personal Builder Lab/Inspiration/` (or relative equivalent)
+- `<WORKSPACE_PATH>/Inspiration/` (or relative equivalent, e.g., `./Inspiration/`)
 
 **Explicitly EXCLUDE:**
 - `MyPrivateTools/` and all subdirectories (private tools, symlinks)

@@ -65,13 +65,28 @@ Provide explanations using these seven sections:
 
 This prompt is designed specifically for Cursor IDE and works with any LLM you use within Cursor (Claude, GPT-4, GPT-3.5, etc.). It ensures consistent explanations regardless of which AI feature you're using.
 
-### Integration:
+### Integration Options:
 
-**Add to `.cursorrules`:**
-Copy the "Rule: Communication After Technical Work" section above into your `.cursorrules` file in your workspace root. This ensures ALL AI interactions in Cursor (Composer, Chat, inline suggestions, etc.) will follow this format.
+Choose the option that fits your workflow:
 
-**Why `.cursorrules`?**
-Cursor IDE reads `.cursorrules` and applies it to all AI features automatically. This means whether you're using Composer for multi-file edits, Chat for questions, or any other AI feature, the explanation format will be consistent.
+**Option 1: Workspace-Specific (Single Workspace)**
+- **Add to `.cursorrules`** in your workspace root
+- **Best for:** Working on one primary workspace with unique needs
+- **Effect:** Rule applies only to this workspace
+- **Example:** `/Users/yourname/my-project/.cursorrules`
+
+**Option 2: Universal (All Workspaces)**
+- **Add to Cursor Settings → User Rules**
+- **Best for:** Consistent behavior across all your Cursor workspaces
+- **Effect:** Rule applies to every workspace you open in Cursor
+- **How:** Cursor Settings → Rules → User Rules → Paste the "Rule: Communication After Technical Work" section
+
+**Why These Options?**
+- `.cursorrules` = workspace-specific configuration (like project settings)
+- User Rules = universal preferences (like IDE-wide settings)
+- Cursor reads both and applies them to all AI features (Composer, Chat, inline suggestions, etc.)
+
+**Recommendation:** Use **Option 2 (User Rules)** if you want laymen explanations across all your projects. Use **Option 1 (.cursorrules)** if you only need it for specific projects.
 
 ### For Other IDEs or Tools:
 
