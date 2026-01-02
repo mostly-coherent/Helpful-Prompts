@@ -1,6 +1,6 @@
 # Workspace Privacy Optimization
 
-> **Prompt to prepare your workspace for GitHub sharing while protecting private content**
+> **Prompt for Cursor AI to prepare your Adobe workspace for GitHub sharing while protecting private content**
 
 ---
 
@@ -8,38 +8,36 @@
 
 When you push code to GitHub, **everything in your repository becomes visible** (unless it's a private repo—but even then, collaborators see it all). Common mistakes:
 
-- Personal file paths like `/Users/jane/Projects/...` reveal your username
-- Hardcoded emails and GitHub accounts in config files
+- Personal file paths like `/Users/yourname/Projects/...` reveal your username
+- Hardcoded personal emails and GitHub accounts in config files
 - API keys, tokens, or secrets accidentally committed
 - Personal notes mixed with shareable code
 
-This prompt helps you **audit and fix** these issues before sharing.
+This prompt helps you **audit and fix** these issues before sharing to `github.com/<your_adobe_user>`.
 
 ---
 
 ## Prerequisites
 
-Before running this prompt, decide on your **private folder pattern**:
+**Adobe Convention:** Use `MyPrivate*/` pattern for private folders:
 
-| Pattern | Example | Best For |
-|---------|---------|----------|
-| `Private*/` | `PrivateNotes/`, `PrivateConfig/` | Clear, explicit naming |
-| `_private/` | `_private/notes/`, `_private/keys/` | Underscore convention |
-| `.local/` | `.local/config/`, `.local/secrets/` | Hidden folder style |
+| Pattern | Example | Adobe Standard |
+|---------|---------|----------------|
+| `MyPrivate*/` | `MyPrivateNotes/`, `MyPrivatePrompts/`, `MyPrivateConfig/` | ✅ Adobe workspace standard |
 
-**Choose one pattern and use it consistently.** The prompt below uses `Private*/` as the default—replace with your chosen pattern.
+This convention is used across Adobe workspaces for consistency.
 
 ---
 
 ## The Prompt
 
-Copy and paste this into your AI assistant:
+Copy and paste this into Cursor AI:
 
 ```
 Optimize this workspace for sharing while protecting private content.
 
 ## My Organization Pattern
-- Any folder named `Private*` (e.g., PrivatePrompts/, PrivateNotes/) is PRIVATE
+- Any folder named `MyPrivate*` (e.g., MyPrivatePrompts/, MyPrivateNotes/) is PRIVATE
 - Everything else should be shareable (no personal paths, accounts, emails, secrets)
 
 ## Tasks
@@ -47,8 +45,8 @@ Optimize this workspace for sharing while protecting private content.
 ### 1. Update .gitignore Files
 Find all .gitignore files in this workspace and ensure they include:
 
-# Private folders (customize pattern as needed)
-Private*/
+# Private folders (Adobe convention)
+MyPrivate*/
 
 # Environment files with secrets
 .env
@@ -73,10 +71,15 @@ Search ALL non-private files for personal information:
 - Linux: `/home/<username>/...`
 
 **Accounts & Identity:**
-- Personal GitHub accounts (github.com/<username>)
-- Personal email addresses
+- Personal GitHub accounts (e.g., github.com/yourpersonaluser)
+- Personal email addresses (e.g., yourpersonal@gmail.com)
 - Personal names in maintainer/author/owner fields
-- Personal cloud provider account URLs
+- Personal Vercel/Netlify/Heroku account URLs
+
+**Adobe-Specific:**
+- Personal Adobe email (e.g., yourname@adobe.com) should be replaced with generic references
+- Adobe GitHub username (e.g., github.com/yourname_adobe) should use placeholders in templates
+- Vercel team names (e.g., vercel.com/your-team) should use placeholders
 
 **Secrets & Credentials:**
 - API keys (patterns like `sk-`, `pk_`, `api_`, `key_`)
@@ -85,22 +88,24 @@ Search ALL non-private files for personal information:
 - Private URLs with auth parameters
 
 Report what you find. For each file with personal info:
-- If it's a template → replace with generic placeholders
-- If it's config → suggest what to move to private folder or .env
+- If it's a template → replace with generic placeholders (e.g., `<YOUR_ADOBE_USER>`, `<YOUR_EMAIL>`)
+- If it's config → suggest what to move to MyPrivate* folder or .env
 - If it's a secret → REMOVE immediately and add pattern to .gitignore
 
 ### 3. Fix Stale References
-Search for any references to files that are now in private folders.
+Search for any references to files that are now in MyPrivate* folders.
 Update those references to point to the correct location.
 
 ### 4. Verify Workspace Config Files
 Check these files for consistency:
+- .cursorrules (if exists)
+- CLAUDE.md (if exists)
 - README.md
 - package.json (author/repository fields)
 - Any *.md files at workspace root
 
 Ensure:
-- References to private files point to private folder locations
+- References to private files point to MyPrivate* folder locations
 - No personal paths/accounts/emails in shareable files
 - .gitignore pattern is documented where relevant
 - package.json uses generic or placeholder values for personal fields
@@ -109,7 +114,7 @@ Ensure:
 1. Summary table of all changes made
 2. List of any files that need manual review
 3. List of any secrets found (for immediate action)
-4. Confirmation that private folder pattern is enforced everywhere
+4. Confirmation that MyPrivate*/ pattern is enforced everywhere
 ```
 
 ---
@@ -122,17 +127,17 @@ After optimization, verify with these commands:
 
 ```bash
 # macOS/Linux - check for personal paths
-grep -rn "/Users/" . --include="*.md" --include="*.json" --include="*.ts" --include="*.js" | grep -v "node_modules" | grep -v "Private"
+grep -rn "/Users/" . --include="*.md" --include="*.json" --include="*.ts" --include="*.js" | grep -v "node_modules" | grep -v "MyPrivate"
 
 # Windows equivalent (PowerShell)
-Get-ChildItem -Recurse -Include *.md,*.json,*.ts,*.js | Select-String "C:\\Users\\" | Where-Object { $_.Path -notmatch "node_modules|Private" }
+Get-ChildItem -Recurse -Include *.md,*.json,*.ts,*.js | Select-String "C:\\Users\\" | Where-Object { $_.Path -notmatch "node_modules|MyPrivate" }
 ```
 
 ### Check .gitignore Configuration
 
 ```bash
-# Verify private pattern exists
-grep "Private" .gitignore
+# Verify MyPrivate pattern exists
+grep "MyPrivate" .gitignore
 
 # List what's being ignored
 git status --ignored
@@ -156,26 +161,27 @@ git secrets --scan-history
 
 Use this checklist to confirm optimization is complete:
 
-- [ ] All `.gitignore` files have private folder pattern
+- [ ] All `.gitignore` files have `MyPrivate*/` pattern
 - [ ] `.gitignore` includes `.env*` patterns for environment files
 - [ ] No personal file paths in shareable files (checked all platforms)
 - [ ] No personal GitHub accounts hardcoded in shareable files
 - [ ] No personal emails in shareable files
 - [ ] No API keys, tokens, or secrets in shareable files
-- [ ] All references to private files point to private folder locations
+- [ ] All references to private files point to MyPrivate* folder locations
 - [ ] `package.json` has generic author/repository (if applicable)
-- [ ] Ran `git status --ignored` to confirm private folders are ignored
+- [ ] `.cursorrules` and `CLAUDE.md` updated (if they exist)
+- [ ] Ran `git status --ignored` to confirm MyPrivate* folders are ignored
 
 ---
 
 ## Common Patterns to Replace
 
-| Personal Pattern | Generic Replacement |
+| Personal Pattern | Generic Replacement (Adobe) |
 |-----------------|---------------------|
-| `/Users/jane/Projects/` | `$WORKSPACE_ROOT/` or `./` |
-| `github.com/jane-smith` | `github.com/<your-username>` or `$(git remote -v)` |
-| `jane@example.com` | `$(git config user.email)` or `<your-email>` |
-| `vercel.com/jane-team` | `vercel.com/<your-team>` |
+| `/Users/yourname/Projects/` | Use relative paths `./` or reference via `git config` |
+| `github.com/yourname_adobe` | `github.com/<YOUR_ADOBE_USER>` or `$(git remote -v)` |
+| `yourname@adobe.com` | `$(git config user.email)` or `<YOUR_EMAIL>` |
+| `vercel.com/your-team` | `vercel.com/<YOUR_TEAM>` |
 | `sk-abc123...` | Use `.env` file: `process.env.OPENAI_API_KEY` |
 
 ---
@@ -194,11 +200,11 @@ echo "OPENAI_API_KEY=sk-your-key-here" >> .env.example
 
 ### 2. Use Dynamic References in Config Files
 
-Instead of hardcoding personal info:
+Instead of hardcoding personal info in `CLAUDE.md` or `.cursorrules`:
 
 ```markdown
 # Bad
-Git remote: github.com/jane-smith/my-project
+Git remote: github.com/yourname_adobe/my-project
 
 # Good
 Git remote: Check with `git remote -v`
@@ -224,12 +230,13 @@ git secrets --register-aws  # Blocks AWS keys
 | Issue | Solution |
 |-------|----------|
 | "I already committed a secret!" | Rotate the secret immediately. Use `git filter-branch` or BFG Repo-Cleaner to remove from history. |
-| "Private folder still showing in git status" | Check `.gitignore` is at repo root. Pattern must match exactly. Try `git rm -r --cached Private/` then commit. |
-| "AI missing files in search" | Some files may be in ignore lists. Check and adjust patterns. |
+| "MyPrivate folder still showing in git status" | Check `.gitignore` is at repo root. Pattern must match exactly. Try `git rm -r --cached MyPrivate/` then commit. |
+| "Cursor AI missing files in search" | Some files may be in `.cursorignore`. Check that file exists and adjust patterns. |
 | ".env file is being tracked" | Run `git rm --cached .env` then commit. It was added before .gitignore rule. |
 
 ---
 
-**Purpose:** Workspace privacy optimization for GitHub sharing  
-**Audience:** Developers, PMs, and designers new to version control  
+**Purpose:** Workspace privacy optimization for Adobe GitHub sharing  
+**Audience:** Adobe PMs, UX designers, and developers  
+**Convention:** `MyPrivate*/` for private folders  
 **Last Updated:** 2025-12-21
