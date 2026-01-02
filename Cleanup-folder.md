@@ -1,7 +1,7 @@
 # Documentation Cleanup Agent
 
 > **Purpose:** Harmonize user-authored project documentation to canonical structure  
-> **Scope:** Only processes user-desired documentation files (README.md, CLAUDE.md, PLAN.md, BUILD_LOG.md, PIVOTS.md, ARCHITECTURE.md)  
+> **Scope:** Only processes user-desired documentation files (README.md, CLAUDE.md, PLAN.md, BUILD_LOG.md, PIVOT_LOG.md, ARCHITECTURE.md)  
 > **Excludes:** Markdown files that are part of the application's functionality (content files, templates, data files, etc.)  
 > **Usage:** Run this agent on an app project folder (not doc-only folders like `Docs_*`)
 
@@ -17,7 +17,7 @@ Every app project should contain **only** these 6 **documentation** files:
 | `CLAUDE.md` | AI assistant context | Technical details, commands, patterns, setup |
 | `PLAN.md` | Blueprint (WHAT) | Product vision, requirements, features, phases |
 | `BUILD_LOG.md` | Journal (WHEN) | Chronological progress diary, completion status |
-| `PIVOTS.md` | Decisions (WHY) | Course corrections, rationale, alternatives |
+| `PIVOT_LOG.md` | Decisions (WHY) | Course corrections, rationale, alternatives |
 | `ARCHITECTURE.md` | System design (HOW) | Components, data flow, patterns, technical structure |
 
 **DO NOT touch:** Markdown files that are part of the application's functionality (content files, templates, data files, etc.)
@@ -79,7 +79,7 @@ For each non-canonical DOCUMENTATION .md file in project root:
 - Any `.md` file that is part of the application's runtime functionality
 
 **Preserve these canonical documentation files:**
-- `README.md`, `CLAUDE.md`, `PLAN.md`, `BUILD_LOG.md`, `PIVOTS.md`, `ARCHITECTURE.md`
+- `README.md`, `CLAUDE.md`, `PLAN.md`, `BUILD_LOG.md`, `PIVOT_LOG.md`, `ARCHITECTURE.md`
 
 **Step 1.2: Identify candidates**
 
@@ -128,7 +128,7 @@ All other **documentation** `.md` files in project root = cleanup candidates.
 |-------------------|-----------|----------|
 | Product vision, requirements, features, milestones | `PLAN.md` | FEATURES.md, ROADMAP.md, REQUIREMENTS.md, VISION.md |
 | Progress, completion status, implementation timeline | `BUILD_LOG.md` | PROGRESS.md, STATUS.md, TODO.md, CHANGELOG.md |
-| Decisions, choices, alternatives, pivots, rationale | `PIVOTS.md` | DECISIONS.md, MIGRATION.md, EVOLUTION.md, REFACTOR.md |
+| Decisions, choices, alternatives, pivots, rationale | `PIVOT_LOG.md` | DECISIONS.md, MIGRATION.md, EVOLUTION.md, REFACTOR.md |
 | System design, components, data flow, patterns | `ARCHITECTURE.md` | DESIGN.md, STRUCTURE.md, COMPONENTS.md, PATTERNS.md |
 | Setup, commands, config, troubleshooting, dev notes | `CLAUDE.md` | SETUP.md, INSTALL.md, COMMANDS.md, CONFIG.md |
 | User guides, getting started, overview, intro | `README.md` | GETTING_STARTED.md, QUICK_START.md, OVERVIEW.md |
@@ -137,7 +137,7 @@ All other **documentation** `.md` files in project root = cleanup candidates.
 
 - **PLAN.md**: "plan", "roadmap", "features", "requirements", "vision", "scope", "milestone"
 - **BUILD_LOG.md**: "log", "progress", "status", "implementation", "completion", "done", "todo"
-- **PIVOTS.md**: "decision", "pivot", "change", "migration", "evolution", "refactor", "why"
+- **PIVOT_LOG.md**: "decision", "pivot", "change", "migration", "evolution", "refactor", "why"
 - **ARCHITECTURE.md**: "architecture", "design", "structure", "components", "flow", "patterns", "system"
 - **CLAUDE.md**: "setup", "install", "commands", "config", "troubleshooting", "dev", "technical"
 - **README.md**: "getting started", "quick start", "overview", "intro", "guide", "user"
@@ -147,7 +147,7 @@ All other **documentation** `.md` files in project root = cleanup candidates.
 
 **If multiple categories identified:**
 - Split content appropriately:
-  - Decisions/rationale → `PIVOTS.md`
+  - Decisions/rationale → `PIVOT_LOG.md`
   - Technical implementation → `ARCHITECTURE.md` or `CLAUDE.md`
   - Progress/timeline → `BUILD_LOG.md`
   - Requirements/features → `PLAN.md`
@@ -165,7 +165,7 @@ All other **documentation** `.md` files in project root = cleanup candidates.
    - Technical/operational → `CLAUDE.md` (safest default)
    - System design → `ARCHITECTURE.md`
    - Time-bound progress → `BUILD_LOG.md`
-   - Rationale/decisions → `PIVOTS.md`
+   - Rationale/decisions → `PIVOT_LOG.md`
 
 2. **Document uncertainty:**
    - Add comment: `<!-- Merged from [filename] - categorization uncertain, may need review -->`
@@ -203,7 +203,7 @@ All other **documentation** `.md` files in project root = cleanup candidates.
 |------------|--------|---------|
 | `PLAN.md` | Add to appropriate section | Product Vision, Phases, Feature Requirements |
 | `BUILD_LOG.md` | New dated entry | `## Progress - YYYY-MM-DD` |
-| `PIVOTS.md` | New decision/pivot entry | `## Decision: [Name] - YYYY-MM-DD` |
+| `PIVOT_LOG.md` | New decision/pivot entry | `## Decision: [Name] - YYYY-MM-DD` |
 | `ARCHITECTURE.md` | Add to appropriate section | Components, Data Flow, Patterns |
 | `CLAUDE.md` | Add to appropriate section | Commands, Project Structure, Environment |
 | `README.md` | Merge into sections | Overview, Getting Started, Usage |
@@ -273,7 +273,7 @@ Document in report:
 ### Version-specific files (e.g., `V1_*.md`, `V2_*.md`)
 
 **Action:** Split and merge:
-- Key decisions → `PIVOTS.md`
+- Key decisions → `PIVOT_LOG.md`
 - Architecture changes → `ARCHITECTURE.md`
 - Progress → `BUILD_LOG.md`
 - Then delete
@@ -288,7 +288,7 @@ Document in report:
 ### Migration/Deployment files
 
 **Action:** Split:
-- Decisions → `PIVOTS.md`
+- Decisions → `PIVOT_LOG.md`
 - Technical details → `ARCHITECTURE.md` or `CLAUDE.md`
 - Then delete
 
@@ -296,7 +296,7 @@ Document in report:
 
 **Action:** Split:
 - Progress → `BUILD_LOG.md`
-- Decisions → `PIVOTS.md`
+- Decisions → `PIVOT_LOG.md`
 - Then delete
 
 ## Report Template
@@ -312,7 +312,7 @@ Document in report:
 ✓ CLAUDE.md
 ✓ PLAN.md
 ✓ BUILD_LOG.md
-✓ PIVOTS.md
+✓ PIVOT_LOG.md
 ✓ ARCHITECTURE.md
 
 ## Files Merged and Deleted
@@ -364,14 +364,14 @@ When running this agent, follow this checklist:
 3. **Never lose information**: Extract all important content before deleting.
 4. **Document everything**: Attribution comments, deletion rationale, uncertainty notes.
 5. **Ask when needed**: Don't guess on critical/high-value content.
-6. **Maintain chronology**: Preserve chronological order in BUILD_LOG.md and PIVOTS.md.
+6. **Maintain chronology**: Preserve chronological order in BUILD_LOG.md and PIVOT_LOG.md.
 7. **Check duplicates**: Verify content doesn't already exist before merging.
 8. **Format consistently**: Adapt merged content to match canonical file structure.
 9. **Preserve dates**: Extract and preserve dates from source files.
 
 ## Notes
 
-- **Preserve history**: Maintain chronological order (especially BUILD_LOG.md and PIVOTS.md)
+- **Preserve history**: Maintain chronological order (especially BUILD_LOG.md and PIVOT_LOG.md)
 - **Don't duplicate**: Check if content already exists in canonical file before merging
 - **Format consistency**: Adapt merged content to match canonical file structure
 - **Date preservation**: Extract and preserve dates from source files when relevant
