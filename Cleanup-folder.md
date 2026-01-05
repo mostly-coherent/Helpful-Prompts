@@ -376,3 +376,16 @@ When running this agent, follow this checklist:
 - **Format consistency**: Adapt merged content to match canonical file structure
 - **Date preservation**: Extract and preserve dates from source files when relevant
 - **Cross-references**: Update any internal links that referenced deleted files
+
+---
+
+## Related Agents
+
+| Agent | Purpose |
+|-------|---------|
+| **This one** (`Cleanup-folder.md`) | Consolidate scattered `.md` files → 6 canonical files |
+| `Upgrade-canonical-docs.md` | Standardize file names + update formats to latest standards |
+
+**Typical workflow:**
+1. Run `Cleanup-folder.md` first (consolidate)
+2. Run `Upgrade-canonical-docs.md` second (standardize)
