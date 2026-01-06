@@ -18,7 +18,7 @@ When the user says "@Debug.md on Inspiration", audit ONLY files within:
 
 **Explicitly EXCLUDE:**
 - `MyPrivateTools/` and all subdirectories (private tools, symlinks)
-- `OtherBuilders/` (cloned reference projects)
+- `Production_Clones/` (cloned reference projects)
 - `Docs_*/` folders (documentation only)
 - Any path outside the target project directory
 
@@ -100,7 +100,7 @@ Do NOT auto-fix when:
 
 1. **Scope the audit to the target project directory only** — Use absolute paths and exclude:
    - `MyPrivateTools/` and all subdirectories (symlinks/private tools)
-   - `OtherBuilders/` (cloned reference projects)
+   - `Production_Clones/` (cloned reference projects)
    - `Docs_*` folders (documentation only)
    - Any path outside the explicitly specified project directory
 2. Read all source files (src/, app/, components/, lib/, pages/) **within the target project only**
@@ -111,7 +111,7 @@ Do NOT auto-fix when:
 7. Generate report and apply high-confidence fixes
 8. **Identify and delete unused files** (exclude documentation - handled by cleanup-folder.md) **within the target project only**
 
-**Critical:** When scanning directories, always use the project root as the base path and explicitly exclude workspace-level folders like `MyPrivateTools/`, `OtherBuilders/`, and `Docs_*/` to avoid "ghost files" from symlinks or duplicate directories.
+**Critical:** When scanning directories, always use the project root as the base path and explicitly exclude workspace-level folders like `MyPrivateTools/`, `Production_Clones/`, and `Docs_*/` to avoid "ghost files" from symlinks or duplicate directories.
 ```
 
 ---
