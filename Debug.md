@@ -259,6 +259,13 @@ For any backend changes (Python, Node.js API routes, etc.):
 
 ## Confidence Calibration
 
+### Zero Tolerance (Must Fix Immediately - Before Any Analysis)
+- **Syntax errors** (Python, TypeScript, JavaScript, etc.)
+- **Import errors** (missing modules, circular imports)
+- **Compilation failures** (TypeScript, build errors)
+
+**Rule:** If code doesn't compile, stop audit and fix immediately. No other analysis matters.
+
 ### High Confidence (Auto-Fix)
 - Syntax errors
 - Missing null checks on obviously nullable values
@@ -391,4 +398,27 @@ Before deleting any file:
 
 ---
 
-**Last Updated:** 2025-12-29
+## Key Principle
+
+**"Code must compile before it can be analyzed."**
+
+This is enforced via Phase 0 (Pre-Flight Compilation Checks). Multiple comprehensive audits that miss syntax errors aren't actually comprehensive.
+
+**Testing Pyramid for Hybrid Apps:**
+```
+        /\
+       /  \  E2E Tests (Playwright)
+      /    \  User journeys, integration
+     /------\
+    / Unit   \  Backend unit tests
+   / Tests    \ Function-level logic
+  /           \
+ /-------------\
+/ Compilation  \ Syntax + Import checks
+\   Checks    /  MUST PASS FIRST
+ \-----------/
+```
+
+---
+
+**Last Updated:** 2026-01-12
