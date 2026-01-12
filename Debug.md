@@ -98,18 +98,61 @@ Do NOT auto-fix when:
 
 ## Execution Order
 
+### Phase 0: Pre-Flight Compilation Checks (CRITICAL - Run First)
+
+**Rule:** Code must compile before it can be analyzed. Stop immediately if compilation fails.
+
 1. **Scope the audit to the target project directory only** — Use absolute paths and exclude:
    - `MyPrivateTools/` and all subdirectories (symlinks/private tools)
    - `Production_Clones/` (cloned reference projects)
    - `Docs_*` folders (documentation only)
    - Any path outside the explicitly specified project directory
-2. Read all source files (src/, app/, components/, lib/, pages/) **within the target project only**
-3. Check configuration files (package.json, tsconfig, eslint, tailwind) **within the target project only**
-4. Analyze styles for accessibility (CSS, Tailwind classes) **within the target project only**
-5. Review API routes and data fetching **within the target project only**
-6. Check test coverage gaps (if tests exist) **within the target project only**
-7. Generate report and apply high-confidence fixes
-8. **Identify and delete unused files** (exclude documentation - handled by cleanup-folder.md) **within the target project only**
+
+2. **Verify all code compiles/executes** (within target project only):
+   
+   **TypeScript/JavaScript:**
+   ```bash
+   npx tsc --noEmit  # TypeScript compilation check
+   npm run lint      # ESLint (if configured)
+   ```
+   
+   **Python (if project uses Python backend):**
+   ```bash
+   # Syntax check all Python files
+   find . -name "*.py" -not -path "./node_modules/*" -not -path "./.venv/*" -not -path "./__pycache__/*" \
+     -exec python3 -m py_compile {} \;
+   
+   # Import check (critical modules)
+   python3 -c "import sys; sys.path.insert(0, '.'); from engine.generate import *" 2>&1
+   
+   # Dry-run smoke test (if applicable)
+   python3 engine/generate.py --dry-run 2>&1 | head -20
+   ```
+   
+   **Why this matters:** E2E tests may pass even with syntax errors if:
+   - Tests mock backend functionality
+   - Tests don't exercise modified code paths
+   - Syntax errors exist in unimported modules
+   
+   **If compilation fails:** Fix syntax/import errors before proceeding to Phase 1.
+
+### Phase 1: Static Analysis
+
+3. Read all source files (src/, app/, components/, lib/, pages/) **within the target project only**
+4. Check configuration files (package.json, tsconfig, eslint, tailwind) **within the target project only**
+5. Analyze styles for accessibility (CSS, Tailwind classes) **within the target project only**
+6. Review API routes and data fetching **within the target project only**
+
+### Phase 2: Test Validation
+
+7. Check test coverage gaps (if tests exist) **within the target project only**
+8. Run E2E tests (verify they exercise modified code paths)
+9. Run unit tests (if they exist)
+
+### Phase 3: Reporting
+
+10. Generate report and apply high-confidence fixes
+11. **Identify and delete unused files** (exclude documentation - handled by cleanup-folder.md) **within the target project only**
 
 **Critical:** When scanning directories, always use the project root as the base path and explicitly exclude workspace-level folders like `MyPrivateTools/`, `Production_Clones/`, and `Docs_*/` to avoid "ghost files" from symlinks or duplicate directories.
 ```
@@ -175,6 +218,42 @@ Audit only the /src/components folder
 | **Missing Memoization** | Expensive computation in render without useMemo |
 | **Unnecessary Re-renders** | Object/array literals in props |
 | **Blocking Operations** | Sync operations on main thread |
+
+---
+
+## Test Coverage Reality Check
+
+### What E2E Tests Don't Catch
+
+| Test Type | What It Catches | What It Misses |
+|-----------|-----------------|----------------|
+| **E2E (Playwright)** | UI flows, integration paths, user journeys | Syntax errors in unexercised code paths, backend logic not called by tests |
+| **Unit Tests** | Function-level logic, edge cases | Integration issues, UI bugs, end-to-end flows |
+| **Linters** | Style issues, common patterns | Syntax errors (if not configured), logic errors, runtime issues |
+| **TypeScript** | Type errors, interface mismatches | Runtime errors, business logic bugs, Python backend errors |
+
+### The "Tests Passing" Trap
+
+**Scenario:** Modified Python backend file → 26 Playwright tests pass → App crashes on first real use
+
+**Why tests passed:**
+- Tests mock backend responses OR
+- Tests only exercise frontend OR  
+- Modified code path not covered by tests OR
+- Syntax error in module that tests don't import
+
+**Solution:** Always run backend smoke tests independently of E2E tests.
+
+### Smoke Test Checklist
+
+For any backend changes (Python, Node.js API routes, etc.):
+- [ ] Run syntax check: `python3 -m py_compile <modified_file>`
+- [ ] Try importing the module: `python3 -c "from module import Class"`
+- [ ] Run dry-run test if available: `python3 script.py --dry-run`
+- [ ] Run unit tests for that module: `pytest tests/test_module.py`
+- [ ] THEN run E2E tests
+
+**Never assume "tests passing" means "code works"** without verifying the specific code path was exercised.
 
 ---
 
