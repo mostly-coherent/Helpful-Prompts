@@ -632,6 +632,12 @@ git clean -fd  # Remove untracked files
 
 ## Output Format
 
+**🚨 IMPORTANT: Output Format is for Response Only**
+- **DO NOT create .md files or documentation artifacts** unless explicitly requested by user
+- Present all results in the chat/composer response using the format below
+- The "Output Format" section specifies HOW to format the response, not what files to create
+- Focus on fixing code, not creating documentation overhead
+
 ### Summary Table
 
 | # | File | Line(s) | Category | Severity | Issue | Status |
@@ -1066,8 +1072,9 @@ useEffect(() => {
 8. **Verify Everything**: Re-check compilation and tests after each fix
 9. **Rollback on Failure**: If verification fails, rollback immediately
 10. **Preserve Intent**: Don't change functionality, only fix bugs
-11. **Trace Issues**: Document what was wrong and why it was fixed
+11. **Trace Issues**: Document what was wrong and why it was fixed (in response, not files)
 12. **Respect Project Rules**: Follow project conventions and style guide
+13. **No Documentation Overhead**: Present results in response format only; DO NOT create .md files unless explicitly requested
 
 ---
 
